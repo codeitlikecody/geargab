@@ -1,0 +1,15 @@
+[package]
+name = "geargab-net"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+geargab-core.workspace = true
+tokio.workspace = true
+socket2.workspace = true
+rosc.workspace = true
+tracing.workspace = true
+if-addrs.workspace = true
+thiserror.workspace = true
