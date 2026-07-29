@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 codeitlikecody <3807221+codeitlikecody@users.noreply.github.com>
+
+SPDX-License-Identifier: MIT OR Apache-2.0
+-->
+
 # GearGab
 
 GearGab is a decentralized, serverless chat and log aggregation tool for live production teams working in theater, live music, broadcast, and corporate AV.
@@ -48,4 +54,32 @@ cd geargab
 cargo check
 
 # Run tests
-cargo test
+cargo 
+```
+
+## Development Status
+
+* [x] Phase 1: Core domain models (chat & presence), OSC/JSON codecs, and SQLite persistence.
+
+* [ ] Phase 2: Multi-interface network socket pool, packet workers, and peer presence.
+
+* [ ] Phase 3: WebSocket bridge and Web UI chat interface.
+
+* [ ] Phase 4: MIDI/IP and hardware protocol bridges.
+
+* [ ] Phase 5: Production-ready packaging, cross-platform builds, and deployment.
+
+* [ ] Phase 6: Optional cloud relay for remote access and multi-site collaboration.
+
+## Contributing
+
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as below, without any additional terms or conditions.
+
+## License
+
+This project is dual-licensed under either of:
+
+* Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or
+  <https://www.apache.org/licenses/LICENSE-2.0>)
+* MIT license ([LICENSE-MIT](LICENSE-MIT) or
+  <https://opensource.org/licenses/MIT>)
