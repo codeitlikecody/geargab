@@ -1,5 +1,5 @@
 use crate::error::GearGabError;
-use crate::models::{CanonicalMessage, ClientType, Heartbeat};
+use crate::models::{CanonicalMessage, ClientType, HardwareEvent, Heartbeat};
 use rusqlite::{params, Connection};
 
 pub struct Repository<'a> {
@@ -62,7 +62,6 @@ impl<'a> Repository<'a> {
             messages.push(msg_result?);
         }
 
-        // Reverse so the caller receives chronological order (oldest to newest)
         messages.reverse();
         Ok(messages)
     }
@@ -121,5 +120,51 @@ impl<'a> Repository<'a> {
         }
 
         Ok(peers)
+    }
+
+    /// Inserts an unmatched raw hardware event into the event log.
+    pub fn insert_hardware_event(&self, event: &HardwareEvent) -> Result<i64, GearGabError> {
+        self.conn.execute(
+            "INSERT INTO hardware_events (source_ip, raw_address, arguments_summary, timestamp)
+             VALUES (?1, ?2, ?3, ?4)",
+            params![
+                event.source_ip,
+                event.raw_address,
+                event.arguments_summary,
+                event.timestamp
+            ],
+        )?;
+
+        Ok(self.conn.last_insert_rowid())
+    }
+
+    /// Fetches recent unmatched hardware events ordered chronological (oldest to newest).
+    pub fn fetch_recent_hardware_events(
+        &self,
+        limit: usize,
+    ) -> Result<Vec<HardwareEvent>, GearGabError> {
+        let mut stmt = self.conn.prepare(
+            "SELECT source_ip, raw_address, arguments_summary, timestamp
+             FROM hardware_events
+             ORDER BY id DESC
+             LIMIT ?1",
+        )?;
+
+        let rows = stmt.query_map(params![limit as i64], |row| {
+            Ok(HardwareEvent {
+                source_ip: row.get(0)?,
+                raw_address: row.get(1)?,
+                arguments_summary: row.get(2)?,
+                timestamp: row.get(3)?,
+            })
+        })?;
+
+        let mut events = Vec::new();
+        for event_result in rows {
+            events.push(event_result?);
+        }
+
+        events.reverse();
+        Ok(events)
     }
 }

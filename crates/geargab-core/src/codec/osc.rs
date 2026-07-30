@@ -130,6 +130,13 @@ fn extract_long(arg: &OscType) -> Result<i64, GearGabError> {
     match arg {
         OscType::Long(i) => Ok(*i),
         OscType::Int(i) => Ok(*i as i64),
-        _ => Err(GearGabError::OscDecodeError("Expected Long/Int argument".to_string())),
+        OscType::Float(f) => Ok(*f as i64),
+        OscType::Double(d) => Ok(*d as i64),
+        OscType::String(s) => s.parse::<i64>().map_err(|_| {
+            GearGabError::OscDecodeError(format!("Failed to parse string '{s}' as integer"))
+        }),
+        _ => Err(GearGabError::OscDecodeError(
+            "Expected numeric argument (Long/Int/Float/Double/Numeric String)".to_string(),
+        )),
     }
 }

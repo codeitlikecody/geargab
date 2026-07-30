@@ -26,6 +26,17 @@ pub fn initialize_schema(conn: &Connection) -> Result<()> {
 
         CREATE INDEX IF NOT EXISTS idx_peers_last_seen 
             ON peers(last_seen DESC);
+
+        CREATE TABLE IF NOT EXISTS hardware_events (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            source_ip TEXT NOT NULL,
+            raw_address TEXT NOT NULL,
+            arguments_summary TEXT NOT NULL,
+            timestamp INTEGER NOT NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_hardware_events_ts 
+            ON hardware_events(timestamp DESC);
         ",
     )
 }
