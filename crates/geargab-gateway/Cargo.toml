@@ -1,14 +1,6 @@
 [package]
 name = "geargab-gateway"
-version.workspace = true
-edition.workspace = true
-authors.workspace = true
-license.workspace = true
+version = "0.1.0"
+edition = "2024"
 
 [dependencies]
-geargab-core.workspace = true
-geargab-net.workspace = true
-tokio.workspace = true
-axum.workspace = true
-tracing.workspace = true
-tracing-subscriber.workspace = true
