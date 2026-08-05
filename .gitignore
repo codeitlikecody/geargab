@@ -1,6 +1,7 @@
 # Rust build artifacts
 /target
 Cargo.lock
+**/*.rs.bk
 
 # Operating System files
 .DS_Store
@@ -14,5 +15,6 @@ Thumbs.db
 
 # Local database files
 *.db
+*.db-journal
 *.sqlite
 *.sqlite-journal
